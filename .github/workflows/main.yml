@@ -1,37 +1,3 @@
-#name: CI / CD for Angular
-#on:
-#  push:
-#    branches: [ "master" ]
-#
-#jobs:
-#  build-and-deploy:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v1.7
-#
-#      - name: Set up node.js
-#        uses: actions/setup-node@v3.3.0
-#        with:
-#          node-version: '14'
-#          cache: 'npm'
-#
-#      - name: Install dependencies
-#        run: npm ci
-#
-#      - name: Tests
-#        run: npm run test:prod
-#
-#      - name: Build
-#        run: npm run build:prod
-#
-#      - name: Deploy to GitHub Pages
-#        uses: georgeStan/testingtheplesk@v1.7
-#        with:
-#          target_branch: gh-pages
-#          build_dir: dist/git-plesk
-#        env:
-#          GITHUB_TOKEN: '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'
 name: Angular GitHub CI
 on:
   push:
