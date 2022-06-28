@@ -1,34 +1,32 @@
-name: CI / CD for Angular
-on:
-  push:
-    branches: [ "master" ]
-
+on: push
+name: Build Angular
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v1
 
-      - name: Set up node.js
-        uses: actions/setup-node@v3.3.0
+      - name: Cache node modules
+        uses: actions/cache@v1
         with:
-          node-version: '16'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Tests
-        run: npm run test:prod
-
-      - name: Build
-        run: npm run build:prod
-
-      - name: Deploy to GitHub Pages
-        uses: georgeStan/testingtheplesk@v1.7
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
         with:
-          target_branch: gh-pages
-          build_dir: dist/git-plesk
-        env:
-          GITHUB_TOKEN: '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'
+          node-version: ${{ matrix.node-version }}
+      - name: npm install and npm run build
+        run: |
+          npm i
+          npm run build:prod
+      - name: Push Build to Releases
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "dist/git-plesk/*"
+          token: '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'
