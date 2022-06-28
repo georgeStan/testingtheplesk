@@ -1,48 +1,34 @@
-name: Angular GitHub CI
+name: CI / CD for Angular
 on:
   push:
-    branches:
-      - main
+    branches: [ "master" ]
 
 jobs:
-  ci:
+  build-and-deploy:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [10.x, 12.x]
-
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v1.7
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+      - name: Set up node.js
+        uses: actions/setup-node@v3.3.0
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: '16'
+          cache: 'npm'
 
-      - name: Cache node modules
-        id: cache-nodemodules
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-node-modules
-        with:
-          # caching node_modules
-          path: node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-      - name: Install Dependencies
-        if: steps.cache-nodemodules.outputs.cache-hit != 'true'
-        run: |
-          npm ci
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Tests
+        run: npm run test:prod
+
       - name: Build
-        run: |
-          npm run build -- --prod
-      - name: Lint
-        run: |
-          npm run lint
-      - name: Test
-        run: |
-          npm run test -- --prod
+        run: npm run build:prod
+
+      - name: Deploy to GitHub Pages
+        uses: georgeStan/testingtheplesk@v1.7
+        with:
+          target_branch: gh-pages
+          build_dir: dist/git-plesk
+        env:
+          GITHUB_TOKEN: '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'
