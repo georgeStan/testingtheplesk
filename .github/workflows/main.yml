@@ -29,6 +29,6 @@ jobs:
         uses: crazy-max/ghaction-github-pages@v3
         with:
           target_branch: gh-pages
-          build_dir: dist/git-testing-app
+          build_dir: dist/git-plesk
         env:
           GITHUB_TOKEN: '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'
