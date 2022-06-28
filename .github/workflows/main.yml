@@ -26,7 +26,7 @@ jobs:
         run: npm run build:prod
 
       - name: Deploy to GitHub Pages
-        uses: crazy-max/ghaction-github-pages@v3
+        uses: georgeStan/testingtheplesk@latest
         with:
           target_branch: gh-pages
           build_dir: dist/git-plesk
