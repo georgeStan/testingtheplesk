@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build:prod": "ng build --deploy-url /git-testing-app/",
+    "build:prod": "ng build --deploy-url /git-plesk/",
     "watch": "ng build --watch --configuration development",
     "test:prod": "ng test --browsers=ChromeHeadless --watch=false --code-coverage"
 
