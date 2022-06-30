@@ -32,4 +32,4 @@ jobs:
         with:
           GITHUB_TOKEN: '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'
           BRANCH: gh-pages
-          FOLDER: dist/git-plesk
+          FOLDER: /
