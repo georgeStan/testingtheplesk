@@ -30,7 +30,6 @@
 #        with:
 #          artifacts: "dist/git-plesk/*"
 #          token: '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'
-
 name: Build and Deploy
 
 on:
