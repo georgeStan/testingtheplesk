@@ -61,7 +61,7 @@ jobs:
           npm install
           npm run-script deploy
       - name: Deploy
-        uses: georgeStan/testingtheplesk@releases/v2
+        uses: georgeStan/testingtheplesk@releases/v1.8
         with:
           GITHUB_TOKEN: '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'
           BRANCH: gh-pages
